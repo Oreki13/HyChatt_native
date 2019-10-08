@@ -1,0 +1,45 @@
+{
+  "mapStatetoProps": {
+    "prefix": "_mapState",
+    "body": [
+      "const mapStateToProps =state=>{\r",
+      "  return{\r",
+      "    $1\r",
+      "  }\r",
+      "}"
+    ],
+    "description": "conect redux"
+  },
+  "Open Class": {
+    "prefix": "_clas",
+    "body": [
+      "import React, {Component} from 'react'\r",
+      "import { View, Text, SafeAreaView, Image } from \"react-native\";\r",
+      "\r",
+      "class $1 extends Component {\r",
+      "    render(){\r",
+      "        return(\r",
+      "            <SafeAreaView>\r",
+      "                <View>\r",
+      "                    <Text>$3</Text>\r",
+      "                </View>\r",
+      "            </SafeAreaView>\r",
+      "        )\r",
+      "    }\r",
+      "}\r",
+      "\r",
+      "export default $2 ;"
+    ],
+    "description": "OPen class"
+  },
+  "imoprt statement": {
+    "prefix": "_imp",
+    "body": ["import {$2} from '$1'"],
+    "description": "create import"
+  },
+  "Create style ": {
+    "prefix": "_styleS",
+    "body": ["const styles= StyleSheet.create({\r", "    $1\r", "})"],
+    "description": "Create style"
+  }
+}
