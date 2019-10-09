@@ -81,7 +81,7 @@ class Home extends Component {
     firebase
       .database()
       .ref(`messages/${uid}`)
-      .on('child_added', result => {
+      .once('child_added', result => {
         let person = result.val();
         console.log('AWIKIKIWKIWK', (person.id = result.key));
 
@@ -89,7 +89,7 @@ class Home extends Component {
         this.state.chat.push({
           id: person.id,
         });
-        this.setState({chat: this.state.chat});
+        // this.setState({chat: this.state.chat});
       });
     firebase
       .database()
@@ -122,12 +122,16 @@ class Home extends Component {
     const users = this.state.users;
     const chat = this.state.chat;
     let data = [];
-    chat.forEach((kocak, key) => {
-      data[key] = users.find(item => item.id === kocak.id);
+    chat.forEach((kocak, index) => {
+      data[index] = users.find(item => item.id === kocak.id);
     });
-    const Dummy = [];
-    console.log(data);
-    console.log(this.state);
+    // const Dummy = [];
+    // const data2 = users.map((data, index) => {
+    //   data[index] = data;
+    // });
+    // console.log('Inee Hasell', data2);
+    // console.log('Inee Hasell11111', data);
+    // console.log(this.state);
 
     return (
       <Fragment>
@@ -145,7 +149,7 @@ class Home extends Component {
         </Header>
         <View>
           <FlatList
-            data={Dummy}
+            data={data}
             numColumns={1}
             renderItem={({item}) => {
               return (
@@ -153,7 +157,10 @@ class Home extends Component {
                   style={styles.button}
                   onPress={() => this.props.navigation.navigate('Chat')}>
                   <View style={styles.item}>
-                    <Image style={styles.image} source={{uri: `${item.img}`}} />
+                    <Image
+                      style={styles.image}
+                      source={{uri: `${item.image}`}}
+                    />
                   </View>
                   <View style={styles.content}>
                     <Text style={styles.textName}>{item.name}</Text>
