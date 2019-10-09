@@ -25,8 +25,88 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser, faBars} from '@fortawesome/free-solid-svg-icons';
 import {TouchableHighlight} from 'react-native-gesture-handler';
+import geolocation from '@react-native-community/geolocation';
+import AsyncStorage from '@react-native-community/async-storage';
+import firebase from '../firebase/index';
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      chat: [],
+      users: [],
+      data: [],
+    };
+    this.getLocation();
+    this.updateLocation();
+  }
+
+  getLocation = async () => {
+    geolocation.getCurrentPosition(info => {
+      this.setState({
+        latitude: info.coords.latitude,
+        longtitude: info.coords.longitude,
+      });
+    });
+  };
+
+  updateLocation = async () => {
+    AsyncStorage.getItem('uid', (error, result) => {
+      if (result) {
+        if (this.state.latitude) {
+          firebase
+            .database()
+            .ref(`user/${result}`)
+            .update({
+              latitude: this.state.latitude,
+              longtitude: this.state.longtitude,
+            });
+        }
+      }
+    });
+  };
+
+  componentDidMount = async () => {
+    const uid = await AsyncStorage.getItem('uid');
+    this.setState({refreshing: true});
+    console.log(uid);
+
+    // firebase
+    //   .database()
+    //   .ref(`messages/${uid}`)
+    //   .once('value', data => {
+    //     console.log('Ininiinin', data.val());
+    //   });
+
+    firebase
+      .database()
+      .ref(`messages/${uid}`)
+      .on('child_added', result => {
+        let person = result.val();
+        console.log('AWIKIKIWKIWK', (person.id = result.key));
+
+        person.id = result.key;
+        this.state.chat.push({
+          id: person.id,
+        });
+        this.setState({chat: this.state.chat});
+      });
+    firebase
+      .database()
+      .ref('user/')
+      .once('value', result => {
+        let data = result.val();
+        console.log('AWOWOKOWKOW', data);
+
+        if (data !== null) {
+          let users = Object.values(data);
+          this.setState({
+            users,
+          });
+        }
+      });
+  };
+
   static navigationOptions = {
     drawerLabel: 'Home',
 
@@ -39,26 +119,16 @@ class Home extends Component {
   };
 
   render() {
-    const Dummy = [
-      {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        name: 'First Item',
-        status: 'Online',
-        img: 'http://pluspng.com/img-png/user-png-icon-male-user-icon-512.png',
-      },
-      {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        name: 'Second Item',
-        status: 'Online',
-        img: 'http://pluspng.com/img-png/user-png-icon-male-user-icon-512.png',
-      },
-      {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        name: 'Third Item',
-        status: 'Online',
-        img: 'http://pluspng.com/img-png/user-png-icon-male-user-icon-512.png',
-      },
-    ];
+    const users = this.state.users;
+    const chat = this.state.chat;
+    let data = [];
+    chat.forEach((kocak, key) => {
+      data[key] = users.find(item => item.id === kocak.id);
+    });
+    const Dummy = [];
+    console.log(data);
+    console.log(this.state);
+
     return (
       <Fragment>
         <Header>
