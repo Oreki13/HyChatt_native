@@ -77,7 +77,7 @@ class Profile extends Component {
 
     return (
       <Fragment>
-        <Header>
+        <Header style={{backgroundColor: '#4287f5'}}>
           <Left>
             <TouchableOpacity
               style={styles.backAr}
@@ -92,11 +92,14 @@ class Profile extends Component {
         </Header>
         <View style={styles.container}>
           <View style={styles.head}>
-            {/* <Image style={styles.image} source={{uri: this.state.image}} /> */}
-            <Text style={styles.nameDat}>Name: {this.state.name}</Text>
+            <Image style={styles.image} source={{uri: this.state.image}} />
+            <Text style={styles.nameDat}>{this.state.name}</Text>
+          </View>
+          <Text style={styles.adres}>Alamat :{this.state.address}</Text>
+          <View style={styles.btn}>
+            <Button title="Logout" color="red" onPress={this.Logout} />
           </View>
         </View>
-        <Button title="Logout" color="red" onPress={this.Logout} />
       </Fragment>
     );
   }
@@ -110,14 +113,16 @@ const styles = StyleSheet.create({
   },
   head: {
     backgroundColor: '#4287f5',
-    height: 100,
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: Dimensions.get('screen').width,
   },
   image: {
-    width: '55%',
-    height: '77%',
-    borderRadius: 100,
-    borderWidth: 5,
+    width: '35%',
+    height: '57%',
+    borderRadius: 50,
+    borderWidth: 1,
     borderColor: 'white',
     color: 'white',
   },
@@ -132,7 +137,14 @@ const styles = StyleSheet.create({
   },
   nameDat: {
     fontSize: 17,
-    textAlign: 'center',
+    color: 'white',
+  },
+  adres: {
+    marginVertical: 20,
+    paddingHorizontal: 20,
+  },
+  btn: {
+    marginHorizontal: 50,
   },
 });
 

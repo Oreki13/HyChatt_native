@@ -136,11 +136,11 @@ class Chat extends Component {
   //   }));
   // }
   render() {
-    console.log(this.state);
+    console.log('Hereee beib', this.state);
 
     return (
       <>
-        <Header>
+        <Header style={{backgroundColor: '#4287f5'}}>
           <Left>
             <TouchableOpacity
               style={styles.backAr}
@@ -151,7 +151,23 @@ class Chat extends Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            <Title style={styles.title}>Nama Orang</Title>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 50,
+                  marginRight: 10,
+                }}
+                source={{uri: this.state.image}}
+              />
+              <Title style={styles.title}>{this.state.name}</Title>
+            </View>
           </Body>
           <Right />
         </Header>

@@ -7,7 +7,6 @@ import {
   AsyncStorage,
   StatusBar,
 } from 'react-native';
-import Login from '../Auth/login';
 
 export default class Loading extends React.Component {
   state = {
@@ -29,7 +28,7 @@ export default class Loading extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor="#3498db" barStyle="light-content" />
+        <StatusBar backgroundColor="#4287f5" barStyle="light-content" />
         {this.state.isLoading == false ? (
           this.state.uid == null ? (
             this.props.navigation.navigate('Login')

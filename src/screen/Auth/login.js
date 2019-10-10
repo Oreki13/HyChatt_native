@@ -38,7 +38,6 @@ class Login extends Component {
           .ref(`user/${result.user.uid}`)
           .once('value')
           .then(data => {
-            console.log(data.val().name);
             this.setState({isLoading: false});
             AsyncStorage.setItem('uid', data.val().id);
             AsyncStorage.setItem('name', data.val().name);
@@ -49,7 +48,7 @@ class Login extends Component {
                   email: '',
                   password: '',
                 });
-                this.props.navigation.navigate('Home');
+                this.props.navigation.navigate('Home', {name: 'asdasd'});
                 ToastAndroid.show(
                   'Login Success',
                   ToastAndroid.LONG,

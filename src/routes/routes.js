@@ -17,12 +17,11 @@ import Profile from '../screen/profile';
 
 const AuthStack = createStackNavigator(
   {
-    Auth,
     Login,
     SignUp,
   },
   {
-    initialRouteName: 'Auth',
+    initialRouteName: 'Login',
     headerMode: 'none',
   },
 );
@@ -36,10 +35,11 @@ const HomeStack = createStackNavigator(
     Maps,
   },
   {
+    initialRouteName: 'Home',
     contentOptions: {
       drawerIcon: <FontAwesomeIcon icon={faUserFriends} />,
     },
-    initialRouteName: 'Home',
+
     headerMode: 'none',
   },
 );
@@ -48,12 +48,13 @@ const Router = createDrawerNavigator(
   {
     AuthStack,
     HomeStack,
+    Auth,
   },
   {
     contentOptions: {
       drawerIcon: <FontAwesomeIcon icon={faUserFriends} />,
     },
-    initialRouteName: 'AuthStack',
+    initialRouteName: 'Auth',
     drawerPosition: 'left',
     contentComponent: styleDrawer,
     drawerType: 'front',

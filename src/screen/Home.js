@@ -10,6 +10,7 @@ import {
   FlatList,
   StyleSheet,
   Dimensions,
+  StatusBar,
 } from 'react-native';
 import {
   Header,
@@ -36,9 +37,13 @@ class Home extends Component {
       chat: [],
       users: [],
       data: [],
+      naem: 0,
+      newFilter: [],
+      idUser: '',
     };
     this.getLocation();
     this.updateLocation();
+    this.filterMasage();
   }
 
   getLocation = async () => {
@@ -68,8 +73,10 @@ class Home extends Component {
 
   componentDidMount = async () => {
     const uid = await AsyncStorage.getItem('uid');
-    this.setState({refreshing: true});
-    console.log(uid);
+    this.setState({idUser: uid});
+    console.log(
+      'AWOKOKWOKWOKWOKWOKWOKWOKWOKWOKWOKWOKWOWOWKDKSJDKJSKDJSKDJKJDJSD',
+    );
 
     // firebase
     //   .database()
@@ -83,13 +90,13 @@ class Home extends Component {
       .ref(`messages/${uid}`)
       .once('child_added', result => {
         let person = result.val();
-        console.log('AWIKIKIWKIWK', (person.id = result.key));
+        console.log('AWOkwokwokw', person);
 
         person.id = result.key;
         this.state.chat.push({
           id: person.id,
         });
-        // this.setState({chat: this.state.chat});
+        this.setState({chat: this.state.chat});
       });
     firebase
       .database()
@@ -105,37 +112,33 @@ class Home extends Component {
           });
         }
       });
+    const {users} = this.state;
+
+    let datas = users.filter(data => data.id !== uid);
+    this.setState({newFilter: datas});
   };
 
-  static navigationOptions = {
-    drawerLabel: 'Home',
+  filterMasage = async () => {
+    console.log('Ok');
 
-    // drawerIcon: ({ tintColor }) => (
-    //   <Image
-    //     source={require('./chats-icon.png')}
-    //     style={[styles.icon, { tintColor: tintColor }]}
-    //   />
-    // ),
+    const {users} = this.state;
+    await AsyncStorage.getItem('uid').then(result => {
+      console.log(result);
+
+      let datas = users.filter(data => data.id !== result);
+      this.setState({newFilter: datas});
+    });
   };
 
   render() {
     const users = this.state.users;
-    const chat = this.state.chat;
-    let data = [];
-    chat.forEach((kocak, index) => {
-      data[index] = users.find(item => item.id === kocak.id);
-    });
-    // const Dummy = [];
-    // const data2 = users.map((data, index) => {
-    //   data[index] = data;
-    // });
-    // console.log('Inee Hasell', data2);
-    // console.log('Inee Hasell11111', data);
-    // console.log(this.state);
+
+    const data2 = users.filter(data => data.id !== this.state.idUser);
 
     return (
       <Fragment>
-        <Header>
+        <StatusBar backgroundColor="#4287f5" />
+        <Header style={{backgroundColor: '#4287f5'}}>
           <Left>
             <TouchableOpacity
               onPress={() => this.props.navigation.toggleDrawer()}>
@@ -149,13 +152,13 @@ class Home extends Component {
         </Header>
         <View>
           <FlatList
-            data={data}
+            data={data2}
             numColumns={1}
             renderItem={({item}) => {
               return (
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => this.props.navigation.navigate('Chat')}>
+                  onPress={() => this.props.navigation.navigate('Chat', item)}>
                   <View style={styles.item}>
                     <Image
                       style={styles.image}

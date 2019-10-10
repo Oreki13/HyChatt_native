@@ -71,7 +71,7 @@ class Friends extends Component {
 
     return (
       <Fragment>
-        <Header>
+        <Header style={{backgroundColor: '#4287f5'}}>
           <Left>
             <TouchableOpacity
               style={styles.IconAr}

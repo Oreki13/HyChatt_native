@@ -13,7 +13,7 @@ class Splash extends Component {
   render() {
     return (
       <View style={styles.containers}>
-        <StatusBar backgroundColor="#44989c" barStyle="light-content" />
+        <StatusBar backgroundColor="#4287f5" barStyle="light-content" />
         <View style={styles.imageContainer}>
           <Image source={require('../assets/logo.png')} style={styles.image} />
           <Text>Hy Chat</Text>
