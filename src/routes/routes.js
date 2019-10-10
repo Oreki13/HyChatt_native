@@ -14,6 +14,7 @@ import Login from '../screen/Auth/login';
 import SignUp from '../screen/Auth/signUp';
 import Auth from '../screen/Auth/Auth';
 import Profile from '../screen/profile';
+import ProfileFriends from '../screen/ProfileFriends';
 
 const AuthStack = createStackNavigator(
   {
@@ -33,6 +34,7 @@ const HomeStack = createStackNavigator(
     Profile,
     Chat,
     Maps,
+    ProfileFriends,
   },
   {
     initialRouteName: 'Home',

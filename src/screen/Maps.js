@@ -6,6 +6,7 @@ import {
   Image,
   PermissionsAndroid,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import {Header, Left, Right, Button, Body, Title, Item} from 'native-base';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -13,6 +14,7 @@ import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import geolocation from '@react-native-community/geolocation';
 import firebase from '../firebase/index';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Maps extends Component {
   constructor(props) {
@@ -24,10 +26,13 @@ class Maps extends Component {
       lastLat: 0,
       lastLong: 0,
       users: [],
+      idu: '',
     };
   }
 
   componentDidMount = async () => {
+    const uid = await AsyncStorage.getItem('uid');
+    this.setState({idu: uid});
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     ).then(() => {
@@ -98,6 +103,7 @@ class Maps extends Component {
   // };
   render() {
     // console.log(this.state);
+    const {idu} = this.state;
 
     return (
       <Fragment>
@@ -118,12 +124,19 @@ class Maps extends Component {
         </Header>
         <View>
           <MapView
-            style={{width: '100%', height: '100%'}}
+            style={styles.map}
+            provider={PROVIDER_GOOGLE}
+            showsCompass={true}
+            zoomControlEnabled={true}
+            showsUserLocation={true}
+            followsUserLocation={true}
             region={this.state.mapRegion}>
             {this.state.users.map((data, index) => {
               return (
                 <Marker
+                  title={data.id === idu ? 'You' : data.name}
                   key={index}
+                  description={data.status}
                   coordinate={{
                     latitude: data.latitude,
                     longitude: data.longtitude,
@@ -134,7 +147,7 @@ class Maps extends Component {
                       style={{width: 40, height: 40, borderRadius: 50}}
                     />
 
-                    <Text>{data.name}</Text>
+                    {/* <Text>{data.name}</Text> */}
                   </View>
                 </Marker>
               );
@@ -155,6 +168,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 19,
+  },
+  map: {
+    height: Dimensions.get('screen').height,
+    width: Dimensions.get('screen').width,
   },
 });
 

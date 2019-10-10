@@ -136,8 +136,6 @@ class Chat extends Component {
   //   }));
   // }
   render() {
-    console.log('Hereee beib', this.state);
-
     return (
       <>
         <Header style={{backgroundColor: '#4287f5'}}>
@@ -151,23 +149,30 @@ class Chat extends Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('ProfileFriends', {
+                  idNya: this.state.uid,
+                })
+              }>
+              <View
                 style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 50,
-                  marginRight: 10,
-                }}
-                source={{uri: this.state.image}}
-              />
-              <Title style={styles.title}>{this.state.name}</Title>
-            </View>
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 50,
+                    marginRight: 10,
+                  }}
+                  source={{uri: this.state.image}}
+                />
+                <Title style={styles.title}>{this.state.name}</Title>
+              </View>
+            </TouchableOpacity>
           </Body>
           <Right />
         </Header>
