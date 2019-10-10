@@ -31,6 +31,7 @@ class StyleDrawer extends Component {
         </View>
 
         <TouchableHighlight
+          underlayColor={'#bad2f5'}
           onPress={() => {
             this.props.navigation.navigate('Maps');
           }}>
@@ -40,6 +41,7 @@ class StyleDrawer extends Component {
           </View>
         </TouchableHighlight>
         <TouchableHighlight
+          underlayColor={'#bad2f5'}
           onPress={() => {
             this.props.navigation.navigate('Profile');
           }}>

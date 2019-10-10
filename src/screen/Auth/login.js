@@ -6,9 +6,9 @@ import {
   Image,
   TextInput,
   StyleSheet,
-  Button,
   ToastAndroid,
 } from 'react-native';
+import {Spinner, Button} from 'native-base';
 import firebase from '../../firebase/index';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -91,13 +91,20 @@ class Login extends Component {
             onChangeText={text => this.setState({password: text})}
           />
         </View>
-        <Button title="Login" color="purple" onPress={this.onPressLogin} />
+        <Button style={styles.btn1} onPress={this.onPressLogin}>
+          {this.state.isLoading ? (
+            <Spinner color="white" />
+          ) : (
+            <Text style={{color: 'white'}}>Login</Text>
+          )}
+        </Button>
         <Text style={styles.texBtn}>Don't Have Account?</Text>
         <Button
-          title="Sign Up"
-          color="purple"
-          onPress={() => this.props.navigation.navigate('SignUp')}
-        />
+          style={styles.btn2}
+          onPress={() => this.props.navigation.navigate('SignUp')}>
+          <Text style={{color: 'white'}}>SignUp</Text>
+        </Button>
+        {/* <Spinner color="red" /> */}
       </View>
     );
   }
@@ -133,7 +140,7 @@ const styles = StyleSheet.create({
   },
   brand: {
     marginBottom: 50,
-    width: 60,
+    width: 100,
     margin: 20,
   },
   texBrand: {
@@ -144,6 +151,16 @@ const styles = StyleSheet.create({
   },
   texBtn: {
     marginVertical: 10,
+  },
+  btn1: {
+    paddingHorizontal: 30,
+    height: 35,
+    backgroundColor: '#8a3ab5',
+  },
+  btn2: {
+    paddingHorizontal: 20,
+    height: 35,
+    backgroundColor: '#8a3ab5',
   },
 });
 

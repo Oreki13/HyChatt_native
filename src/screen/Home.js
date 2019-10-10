@@ -9,7 +9,7 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
-import {Header, Left, Right, Fab, Title, Body} from 'native-base';
+import {Header, Left, Right, Fab, Title, Body, Spinner} from 'native-base';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBars, faAddressBook} from '@fortawesome/free-solid-svg-icons';
 import geolocation from '@react-native-community/geolocation';
@@ -26,6 +26,7 @@ class Home extends Component {
       naem: 0,
       newFilter: [],
       idUser: '',
+      isLoading: true,
     };
     this.getLocation();
     this.updateLocation();
@@ -89,7 +90,7 @@ class Home extends Component {
     const {users} = this.state;
 
     let datas = users.filter(data => data.id !== uid);
-    this.setState({newFilter: datas});
+    this.setState({newFilter: datas, isLoading: false});
   };
 
   filterMasage = async () => {
@@ -125,28 +126,36 @@ class Home extends Component {
           <Right />
         </Header>
         <View>
-          <FlatList
-            data={data2}
-            numColumns={1}
-            renderItem={({item}) => {
-              return (
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => this.props.navigation.navigate('Chat', item)}>
-                  <View style={styles.item}>
-                    <Image
-                      style={styles.image}
-                      source={{uri: `${item.image}`}}
-                    />
-                  </View>
-                  <View style={styles.content}>
-                    <Text style={styles.textName}>{item.name}</Text>
-                    <Text style={styles.textStatus}>{item.status}</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            }}
-          />
+          {this.state.isLoading ? (
+            <View style={styles.load}>
+              <Spinner color="blue" />
+            </View>
+          ) : (
+            <FlatList
+              data={data2}
+              numColumns={1}
+              renderItem={({item}) => {
+                return (
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() =>
+                      this.props.navigation.navigate('Chat', item)
+                    }>
+                    <View style={styles.item}>
+                      <Image
+                        style={styles.image}
+                        source={{uri: `${item.image}`}}
+                      />
+                    </View>
+                    <View style={styles.content}>
+                      <Text style={styles.textName}>{item.name}</Text>
+                      <Text style={styles.textStatus}>{item.status}</Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          )}
         </View>
         <Fab
           active="true"
@@ -208,6 +217,11 @@ const styles = StyleSheet.create({
   textStatus: {
     fontSize: 14,
     color: '#1c1c1c',
+  },
+  load: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '50%',
   },
 });
 

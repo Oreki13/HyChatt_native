@@ -4,7 +4,7 @@ import {GiftedChat} from 'react-native-gifted-chat';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {withNavigation} from 'react-navigation';
-import {Header, Left, Right, Body, Title} from 'native-base';
+import {Header, Left, Right, Body, Title, Spinner} from 'native-base';
 import firebase from '../firebase/index';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -16,6 +16,7 @@ class Chat extends Component {
     status: this.props.navigation.state.params.status,
     massages: [],
     text: '',
+    isLoading: true,
   };
 
   componentDidMount = async () => {
@@ -33,6 +34,7 @@ class Chat extends Component {
           massages: GiftedChat.append(previousState.massages, val.val()),
         }));
       });
+    this.setState({isLoading: false});
   };
 
   sendMessage = async () => {
@@ -109,17 +111,23 @@ class Chat extends Component {
           </Body>
           <Right />
         </Header>
-        <GiftedChat
-          messages={this.state.massages}
-          onSend={this.sendMessage}
-          showAvatarForEveryMessage={true}
-          user={{
-            _id: this.state.myid,
-            name: this.state.myname,
-            avatar: this.state.avatar,
-          }}
-          onInputTextChanged={value => this.setState({text: value})}
-        />
+        {this.state.isLoading ? (
+          <View style={styles.load}>
+            <Spinner color="blue" />
+          </View>
+        ) : (
+          <GiftedChat
+            messages={this.state.massages}
+            onSend={this.sendMessage}
+            showAvatarForEveryMessage={true}
+            user={{
+              _id: this.state.myid,
+              name: this.state.myname,
+              avatar: this.state.avatar,
+            }}
+            onInputTextChanged={value => this.setState({text: value})}
+          />
+        )}
       </>
     );
   }
@@ -133,6 +141,11 @@ const styles = StyleSheet.create({
   },
   iconAr: {
     color: 'white',
+  },
+  load: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '50%',
   },
 });
 
