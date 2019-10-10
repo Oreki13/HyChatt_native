@@ -6,28 +6,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import firebase from '../firebase/index';
 
 class StyleDrawer extends Component {
-  state = {name: '', images: ''};
-  componentDidMount = async () => {
-    const uid = await AsyncStorage.getItem('uid');
-    firebase
-      .database()
-      .ref(`user/${uid}`)
-      .once('value')
-      .then(data =>
-        this.setState({images: data.val().image, name: data.val().name}),
-      );
-  };
   render() {
     return (
       <Fragment>
         <View style={styles.header}>
-          <Image
-            style={styles.img}
-            source={{
-              uri: this.state.images,
-            }}
-          />
-          <Text>{this.state.name}</Text>
+          <Image style={styles.img} source={require('../assets/logo.png')} />
+          <Text style={{color: 'white'}}>Hy Chat</Text>
         </View>
 
         <TouchableHighlight
@@ -64,15 +48,17 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 170,
-    backgroundColor: '#4287f5',
+    // backgroundColor: '#4287f5',
+    backgroundColor: '#779fc7',
     alignItems: 'center',
     justifyContent: 'center',
   },
   img: {
     color: 'black',
-    height: 70,
-    width: 70,
-    borderRadius: 50,
+    height: 83,
+    width: 80,
+    marginBottom: 10,
+    // borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
