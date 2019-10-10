@@ -12,7 +12,8 @@ import {
 import {DrawerNavigatorItems} from 'react-navigation-drawer';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserFriends} from '@fortawesome/free-solid-svg-icons';
-
+import AsyncStorage from '@react-native-community/async-storage';
+import firebase from '../firebase/index';
 // const StyleDrawer = props => (
 //   <>
 //     <View style={styles.header}>
@@ -41,8 +42,28 @@ import {faUserFriends} from '@fortawesome/free-solid-svg-icons';
 // });
 
 class StyleDrawer extends Component {
+  state = {name: '', images: ''};
+  componentDidMount = async () => {
+    const uid = await AsyncStorage.getItem('uid');
+    // this.setState({uid: uid});
+    firebase
+      .database()
+      .ref(`user/${uid}`)
+      .once('value')
+      .then(data =>
+        this.setState({images: data.val().image, name: data.val().name}),
+      );
+  };
   render() {
-    console.log(DrawerNavigatorItems);
+    // console.log(this.state);
+
+    // firebase
+    //   .database()
+    //   .ref(`user/${this.state.uid}`)
+    //   .once('value')
+    //   .then(data =>
+    //     this.setState({images: data.val().image, name: data.val().name}),
+    //   );
 
     return (
       <Fragment>
@@ -50,11 +71,10 @@ class StyleDrawer extends Component {
           <Image
             style={styles.img}
             source={{
-              uri:
-                'http://pluspng.com/img-png/user-png-icon-male-user-icon-512.png',
+              uri: this.state.images,
             }}
           />
-          <Text>My Name</Text>
+          <Text>{this.state.name}</Text>
         </View>
 
         <TouchableHighlight
@@ -89,7 +109,7 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 170,
-    backgroundColor: '#b5fff8',
+    backgroundColor: '#4287f5',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -97,6 +117,7 @@ const styles = StyleSheet.create({
     color: 'black',
     height: 70,
     width: 70,
+    borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -44,20 +44,27 @@ const HomeStack = createStackNavigator(
   },
 );
 
-const Router = createDrawerNavigator(
+const stackDrawer = createDrawerNavigator(
   {
-    AuthStack,
     HomeStack,
-    Auth,
   },
   {
-    contentOptions: {
-      drawerIcon: <FontAwesomeIcon icon={faUserFriends} />,
-    },
-    initialRouteName: 'Auth',
+    initialRouteName: 'HomeStack',
     drawerPosition: 'left',
     contentComponent: styleDrawer,
     drawerType: 'front',
+  },
+);
+
+const Router = createSwitchNavigator(
+  {
+    AuthStack,
+    stackDrawer,
+    Auth,
+  },
+  {
+    initialRouteName: 'Auth',
+    headerMode: 'none',
   },
 );
 
