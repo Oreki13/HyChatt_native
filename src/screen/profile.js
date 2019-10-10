@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
@@ -140,38 +139,9 @@ class Profile extends Component {
         }
       })
       .catch(err => console.log(err));
-    // ImagePicker.showImagePicker(options, response => {
-    //   console.log('Response = ', response);
-
-    //   if (response.didCancel) {
-    //     console.log('User cancelled image picker');
-    //   } else if (response.error) {
-    //     console.log('ImagePicker Error: ', response.error);
-    //   } else if (response.customButton) {
-    //     console.log('User tapped custom button: ', response.customButton);
-    //   } else {
-    //     const source = {uri: response.uri};
-
-    //     this.setState({
-    //       avatarSource: source,
-    //     });
-    //   }
-    // });
   };
 
   render() {
-    // var pos = {
-    //   lat: this.state.latitude,
-    //   lng: this.state.longitude,
-    // };
-
-    // Geocoder.geocodePosition(pos).then(res => {
-    //   this.setState({
-    //     address: res[0].formattedAddress,
-    //   });
-    // });
-    console.log(this.state);
-
     return (
       <Fragment>
         <Header style={{backgroundColor: '#4287f5'}}>

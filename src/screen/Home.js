@@ -2,30 +2,16 @@ import React, {Component, Fragment} from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   Image,
-  Button,
   TouchableOpacity,
-  ScrollView,
   FlatList,
   StyleSheet,
   Dimensions,
   StatusBar,
 } from 'react-native';
-import {
-  Header,
-  Left,
-  Right,
-  Fab,
-  List,
-  ListItem,
-  Title,
-  Body,
-  Thumbnail,
-} from 'native-base';
+import {Header, Left, Right, Fab, Title, Body} from 'native-base';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser, faBars} from '@fortawesome/free-solid-svg-icons';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import geolocation from '@react-native-community/geolocation';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from '../firebase/index';
@@ -74,23 +60,12 @@ class Home extends Component {
   componentDidMount = async () => {
     const uid = await AsyncStorage.getItem('uid');
     this.setState({idUser: uid});
-    console.log(
-      'AWOKOKWOKWOKWOKWOKWOKWOKWOKWOKWOKWOKWOWOWKDKSJDKJSKDJSKDJKJDJSD',
-    );
-
-    // firebase
-    //   .database()
-    //   .ref(`messages/${uid}`)
-    //   .once('value', data => {
-    //     console.log('Ininiinin', data.val());
-    //   });
 
     firebase
       .database()
       .ref(`messages/${uid}`)
       .once('child_added', result => {
         let person = result.val();
-        console.log('AWOkwokwokw', person);
 
         person.id = result.key;
         this.state.chat.push({
@@ -103,7 +78,6 @@ class Home extends Component {
       .ref('user/')
       .once('value', result => {
         let data = result.val();
-        console.log('AWOWOKOWKOW', data);
 
         if (data !== null) {
           let users = Object.values(data);

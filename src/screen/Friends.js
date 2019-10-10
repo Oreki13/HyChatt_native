@@ -32,8 +32,6 @@ class Friends extends Component {
       .database()
       .ref('user')
       .on('child_added', data => {
-        console.log('Data Gannnnnnnnn', data.val());
-
         let person = data.val();
         person.id = data.key;
         if (person.id !== this.state.uid) {
@@ -47,28 +45,6 @@ class Friends extends Component {
   };
 
   render() {
-    const Dummy = [
-      {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        name: 'First Item',
-        status: 'Online',
-        img: 'http://pluspng.com/img-png/user-png-icon-male-user-icon-512.png',
-      },
-      {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        name: 'Second Item',
-        status: 'Online',
-        img: 'http://pluspng.com/img-png/user-png-icon-male-user-icon-512.png',
-      },
-      {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        name: 'Third Item',
-        status: 'Online',
-        img: 'http://pluspng.com/img-png/user-png-icon-male-user-icon-512.png',
-      },
-    ];
-    console.log(this.state);
-
     return (
       <Fragment>
         <Header style={{backgroundColor: '#4287f5'}}>

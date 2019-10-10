@@ -1,51 +1,14 @@
 import React, {Component, Fragment} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  TouchableOpacity,
-  TouchableHighlight,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
-import {DrawerNavigatorItems} from 'react-navigation-drawer';
+import {View, Text, Image, TouchableHighlight, StyleSheet} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserFriends} from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from '../firebase/index';
-// const StyleDrawer = props => (
-//   <>
-//     <View style={styles.header}>
-//       <Text>Hello</Text>
-//     </View>
-//     <ScrollView>
-//       <SafeAreaView
-//         style={styles.container}
-//         forceInset={{top: 'always', horizontal: 'never'}}>
-//         <DrawerNavigatorItems {...props} />
-//       </SafeAreaView>
-//     </ScrollView>
-//   </>
-// );
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   header: {
-//     width: '100%',
-//     height: 200,
-//     backgroundColor: '#000',
-//     alignItems: 'center',
-//   },
-// });
 
 class StyleDrawer extends Component {
   state = {name: '', images: ''};
   componentDidMount = async () => {
     const uid = await AsyncStorage.getItem('uid');
-    // this.setState({uid: uid});
     firebase
       .database()
       .ref(`user/${uid}`)
@@ -55,16 +18,6 @@ class StyleDrawer extends Component {
       );
   };
   render() {
-    // console.log(this.state);
-
-    // firebase
-    //   .database()
-    //   .ref(`user/${this.state.uid}`)
-    //   .once('value')
-    //   .then(data =>
-    //     this.setState({images: data.val().image, name: data.val().name}),
-    //   );
-
     return (
       <Fragment>
         <View style={styles.header}>

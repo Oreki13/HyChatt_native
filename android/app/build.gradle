@@ -133,7 +133,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "Alpha Beta 1.1"
+        versionName "Alpha Beta 2.1"
     }
     signingConfigs {
         release {

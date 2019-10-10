@@ -9,7 +9,6 @@ import {
   Button,
   ToastAndroid,
 } from 'react-native';
-import {Toast} from 'native-base';
 import firebase from '../../firebase/index';
 import AsyncStorage from '@react-native-community/async-storage';
 

@@ -1,14 +1,13 @@
 import React, {Component, Fragment} from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
   Image,
   PermissionsAndroid,
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import {Header, Left, Right, Button, Body, Title, Item} from 'native-base';
+import {Header, Left, Right, Body, Title, Item} from 'native-base';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
@@ -19,7 +18,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 class Maps extends Component {
   constructor(props) {
     super(props);
-    // this.user();
 
     this.state = {
       mapRegion: null,
@@ -61,7 +59,6 @@ class Maps extends Component {
           });
         }
       });
-    // console.log(this.state.users);
   };
 
   onRegionChange(region, lastLat, lastLong) {
@@ -73,36 +70,7 @@ class Maps extends Component {
     });
   }
 
-  //  userGet() {
-  //   firebase
-  //     .database()
-  //     .ref('user/')
-  //     .on('value', result => {
-  //       let data = result.val();
-  //       if (data !== null) {
-  //         let user = Object.values(data);
-  //         console.log('Iniiii data', user);
-  //         this.setState({userss: user});
-  //       }
-  //     });
-  // }
-
-  // user = async () => {
-  //   firebase
-  //     .database()
-  //     .ref('user/')
-  //     .on('value', result => {
-  //       let datas = result.val();
-  //       if (datas !== null) {
-  //         let users = Object.values(datas);
-  //         this.setState({
-  //           users,
-  //         });
-  //       }
-  //     });
-  // };
   render() {
-    // console.log(this.state);
     const {idu} = this.state;
 
     return (
@@ -128,7 +96,6 @@ class Maps extends Component {
             provider={PROVIDER_GOOGLE}
             showsCompass={true}
             zoomControlEnabled={true}
-            showsUserLocation={true}
             followsUserLocation={true}
             region={this.state.mapRegion}>
             {this.state.users.map((data, index) => {
@@ -146,8 +113,6 @@ class Maps extends Component {
                       source={{uri: data.image}}
                       style={{width: 40, height: 40, borderRadius: 50}}
                     />
-
-                    {/* <Text>{data.name}</Text> */}
                   </View>
                 </Marker>
               );

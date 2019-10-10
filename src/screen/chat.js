@@ -1,13 +1,5 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {GiftedChat} from 'react-native-gifted-chat';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
@@ -25,60 +17,6 @@ class Chat extends Component {
     massages: [],
     text: '',
   };
-
-  //   static navigationOptions = () => {
-  //     return {
-  //       headerLeft: (
-  //         <TouchableOpacity
-  //           onPress={() => this.props.navigation.navigate('Home')}>
-  //           <View style={{marginLeft: 10}}>
-  //             <FontAwesomeIcon icon={faArrowLeft} />
-  //           </View>
-  //         </TouchableOpacity>
-  //       ),
-  //       headerTitle: 'Chats',
-  //     };
-  //   };
-  //   state = {
-  //     messages: [],
-  //   };
-
-  // componentWillMount() {
-  //   this.setState({
-  //     messages: [
-  //       {
-  //         _id: 1,
-  //         text: 'Hello developer',
-  //         createdAt: new Date(),
-  //         user: {
-  //           _id: 2,
-  //           name: 'React Native',
-  //           avatar: 'https://placeimg.com/140/140/any',
-  //         },
-  //       },
-  //     ],
-  //   });
-  // }
-
-  // componentDidMount = async () => {
-  //   this.setState({
-  //     myuid: await AsyncStorage.getItem('uid'),
-  //     myname: await AsyncStorage.getItem('name'),
-  //     avatar: await AsyncStorage.getItem('image'),
-  //   });
-  //   await firebase
-  //     .database()
-  //     .ref('messages')
-  //     .child(this.state.myuid)
-  //     .child(this.state.uid)
-  //     .on('child_added', value => {
-  //       this.setState(previousState => {
-  //         return {
-  //           massages: GiftedChat.append(previousState.massages, value.val()),
-  //         };
-  //       });
-  //     });
-  // };
 
   componentDidMount = async () => {
     const myid = await AsyncStorage.getItem('uid');
@@ -130,11 +68,6 @@ class Chat extends Component {
     }
   };
 
-  // onSend(messages = []) {
-  //   this.setState(previousState => ({
-  //     messages: GiftedChat.append(previousState.messages, messages),
-  //   }));
-  // }
   render() {
     return (
       <>
