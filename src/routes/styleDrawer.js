@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {View, Text, Image, TouchableHighlight, StyleSheet} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUserFriends} from '@fortawesome/free-solid-svg-icons';
+import {faUserFriends, faMapMarkedAlt} from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from '../firebase/index';
 
@@ -35,7 +35,7 @@ class StyleDrawer extends Component {
             this.props.navigation.navigate('Maps');
           }}>
           <View style={styles.row}>
-            <FontAwesomeIcon icon={faUserFriends} />
+            <FontAwesomeIcon icon={faMapMarkedAlt} />
             <Text style={{marginLeft: 10}}>Maps</Text>
           </View>
         </TouchableHighlight>

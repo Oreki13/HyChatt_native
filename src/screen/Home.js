@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {Header, Left, Right, Fab, Title, Body} from 'native-base';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser, faBars} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faAddressBook} from '@fortawesome/free-solid-svg-icons';
 import geolocation from '@react-native-community/geolocation';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from '../firebase/index';
@@ -153,7 +153,7 @@ class Home extends Component {
           style={{backgroundColor: '#5067FF'}}
           position="bottomRight"
           onPress={() => this.props.navigation.navigate('Friends')}>
-          <FontAwesomeIcon icon={faUser} />
+          <FontAwesomeIcon icon={faAddressBook} />
         </Fab>
       </Fragment>
     );
