@@ -30,7 +30,6 @@ const AuthStack = createStackNavigator(
 const HomeStack = createStackNavigator(
   {
     Home,
-    Friends,
     Profile,
     Chat,
     Maps,
@@ -38,9 +37,6 @@ const HomeStack = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
-    contentOptions: {
-      drawerIcon: <FontAwesomeIcon icon={faUserFriends} />,
-    },
 
     headerMode: 'none',
   },

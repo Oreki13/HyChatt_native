@@ -20,7 +20,6 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chat: [],
       users: [],
       data: [],
       naem: 0,
@@ -30,7 +29,6 @@ class Home extends Component {
     };
     this.getLocation();
     this.updateLocation();
-    this.filterMasage();
   }
 
   getLocation = async () => {
@@ -59,56 +57,76 @@ class Home extends Component {
   };
 
   componentDidMount = async () => {
-    const uid = await AsyncStorage.getItem('uid');
-    this.setState({idUser: uid});
-
+    await AsyncStorage.getItem('uid').then(result => {
+      if (result) {
+        this.setState({uid: result});
+      }
+    });
     firebase
       .database()
-      .ref(`messages/${uid}`)
-      .once('child_added', result => {
-        let person = result.val();
-
-        person.id = result.key;
-        this.state.chat.push({
-          id: person.id,
-        });
-        this.setState({chat: this.state.chat});
-      });
-    firebase
-      .database()
-      .ref('user/')
-      .once('value', result => {
-        let data = result.val();
-
-        if (data !== null) {
-          let users = Object.values(data);
-          this.setState({
-            users,
+      .ref('user')
+      .on('child_added', data => {
+        let person = data.val();
+        person.id = data.key;
+        if (person.id !== this.state.uid) {
+          this.setState(prevData => {
+            return {
+              users: [...prevData.users, person],
+            };
           });
         }
       });
-    const {users} = this.state;
+    this.setState({isLoading: false});
+    // const uid = await AsyncStorage.getItem('uid');
+    // this.setState({idUser: uid});
 
-    let datas = users.filter(data => data.id !== uid);
-    this.setState({newFilter: datas, isLoading: false});
+    // firebase
+    //   .database()
+    //   .ref(`messages/${uid}`)
+    //   .once('child_added', result => {
+    //     let person = result.val();
+
+    //     person.id = result.key;
+    //     this.state.chat.push({
+    //       id: person.id,
+    //     });
+    //     this.setState({chat: this.state.chat});
+    //   });
+    // firebase
+    //   .database()
+    //   .ref('user/')
+    //   .once('value', result => {
+    //     let data = result.val();
+
+    //     if (data !== null) {
+    //       let users = Object.values(data);
+    //       this.setState({
+    //         users,
+    //       });
+    //     }
+    //   });
+    // const {users} = this.state;
+
+    // let datas = users.filter(data => data.id !== uid);
+    // this.setState({newFilter: datas, isLoading: false});
   };
 
-  filterMasage = async () => {
-    console.log('Ok');
+  // filterMasage = async () => {
+  //   console.log('Ok');
 
-    const {users} = this.state;
-    await AsyncStorage.getItem('uid').then(result => {
-      console.log(result);
+  //   const {users} = this.state;
+  //   await AsyncStorage.getItem('uid').then(result => {
+  //     console.log(result);
 
-      let datas = users.filter(data => data.id !== result);
-      this.setState({newFilter: datas});
-    });
-  };
+  //     let datas = users.filter(data => data.id !== result);
+  //     this.setState({newFilter: datas});
+  //   });
+  // };
 
   render() {
-    const users = this.state.users;
+    // const users = this.state.users;
 
-    const data2 = users.filter(data => data.id !== this.state.idUser);
+    // const data2 = users.filter(data => data.id !== this.state.idUser);
 
     return (
       <Fragment>
@@ -132,7 +150,7 @@ class Home extends Component {
             </View>
           ) : (
             <FlatList
-              data={data2}
+              data={this.state.users}
               numColumns={1}
               renderItem={({item}) => {
                 return (
@@ -149,7 +167,7 @@ class Home extends Component {
                     </View>
                     <View style={styles.content}>
                       <Text style={styles.textName}>{item.name}</Text>
-                      <Text style={styles.textStatus}>{item.status}</Text>
+                      {/* <Text style={styles.textStatus}>{item.status}</Text> */}
                     </View>
                   </TouchableOpacity>
                 );
@@ -157,13 +175,6 @@ class Home extends Component {
             />
           )}
         </View>
-        <Fab
-          active="true"
-          style={{backgroundColor: '#5067FF'}}
-          position="bottomRight"
-          onPress={() => this.props.navigation.navigate('Friends')}>
-          <FontAwesomeIcon icon={faAddressBook} />
-        </Fab>
       </Fragment>
     );
   }
@@ -209,6 +220,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 5,
     paddingLeft: 5,
+    paddingTop: 5,
   },
   textName: {
     fontSize: 18,

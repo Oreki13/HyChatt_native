@@ -18,8 +18,8 @@ class ProfileFriends extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      latitude: null,
-      longitude: null,
+      lat: null,
+      long: null,
       address: '',
       name: '',
       status: '',
@@ -43,11 +43,13 @@ class ProfileFriends extends Component {
           name: data.val().name,
           status: data.val().status,
           image: data.val().image,
+          lat: data.val().latitude,
+          long: data.val().longtitude,
         });
       });
     let pos = {
-      lat: this.state.latitude,
-      lng: this.state.longitude,
+      lat: this.state.lat,
+      lng: this.state.long,
     };
     await Geocoder.geocodePosition(pos)
       .then(res => {
@@ -63,13 +65,15 @@ class ProfileFriends extends Component {
   getLocation = () => {
     geolocation.getCurrentPosition(info => {
       this.setState({
-        latitude: info.coords.latitude,
-        longitude: info.coords.longitude,
+        lat: info.coords.latitude,
+        long: info.coords.longitude,
       });
     });
   };
 
   render() {
+    console.log(this.state);
+
     return (
       <Fragment>
         <Header style={{backgroundColor: '#4287f5'}}>

@@ -82,7 +82,6 @@ class Profile extends Component {
     const fs = RNFetchBlob.fs;
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
     window.Blob = Blob;
-    console.log('LOGGANN', Blob, fs);
 
     const options = {
       title: 'Select Image',

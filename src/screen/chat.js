@@ -149,4 +149,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(Chat);
+export default Chat
