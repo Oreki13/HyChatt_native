@@ -1,6 +1,6 @@
-<h1 align='center'>Mabarin</h1><br/><br /><br />
+<h1 align='center'>Hy Chat</h1><br/><br /><br />
 <p align="center">
-  <img src="https://i.imgur.com/3RpjsuW.png" width="500px"/>
+  <img src="https://i.imgur.com/3RpjsuW.png" width="400px"/>
 </p>
 <br/><br /><br />
 
